@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Details - SixCatSixCat</title>
+    <link rel="stylesheet" href="css/search.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #1a1a2e, #16213e);
+            color: #fff;
+            min-height: 100vh;
+        }
+        header {
+            background: linear-gradient(to right, #4a00e0, #8e2de2);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0.5rem 2rem;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            flex: 0 0 auto;
+        }
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+        }
+        .nav-links a:hover {
+            color: #c8a2ff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .nav-links a.active {
+            color: #c8a2ff;
+            background: rgba(200, 162, 255, 0.1);
+            border-radius: 20px;
+        }
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 7rem; /* 添加顶部内边距，为固定导航栏留出空间 */
+        }
+        .game-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        .game-info {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2rem;
+        }
+        .game-title {
+            font-size: 2.5rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #c8a2ff, #77acf1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .game-description {
+            color: #b8c1ec;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+        .game-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .game-category {
+            background: rgba(74, 0, 224, 0.2);
+            color: #c8a2ff;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .game-controls {
+            margin-bottom: 2rem;
+        }
+        .game-controls h3 {
+            font-size: 1.3rem;
+            color: #c8a2ff;
+            margin-bottom: 0.5rem;
+        }
+        .game-controls p {
+            color: #b8c1ec;
+            line-height: 1.6;
+        }
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        .share-button {
+            background: linear-gradient(to right, #4a00e0, #8e2de2);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.3s;
+        }
+        .share-button:hover {
+            opacity: 0.9;
+        }
+        .game-frame-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            background: #000;
+            border-radius: 10px;
+        }
+        .game-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .back-button {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #c8a2ff;
+            padding: 0.7rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: background 0.3s;
+        }
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        footer {
+            background-color: #0f172a;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: left;
+        }
+        .footer-column h3 {
+            color: #c8a2ff;
+            margin-bottom: 1rem;
+        }
+        .footer-column p, .footer-column a {
+            color: #b8c1ec;
+            text-decoration: none;
+        }
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-column ul li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-bottom {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #2d3748;
+            color: #718096;
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .game-container {
+                grid-template-columns: 1fr;
+            }
+            .game-info {
+                order: 2;
+            }
+            .game-frame-container {
+                order: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script src="js/search.js"></script>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">SixCatSixCat</a>
+            <div class="nav-links">
+                <a href="index.html">All</a>
+                <a href="adventure.html">Adventure</a>
+                <a href="sports.html">Sports</a>
+                <a href="clicker.html">Clicker</a>
+                <a href="car.html">Car</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <a href="javascript:history.back()" class="back-button">← Back</a>
+        
+        <div id="game-details">
+            <!-- Game details will be loaded here -->
+        </div>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <p>SixCatSixCat is your premium online gaming platform. Play exciting games for free, anytime, anywhere!</p>
+            </div>
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="adventure.html">Adventure Games</a></li>
+                    <li><a href="sports.html">Sports Games</a></li>
+                    <li><a href="clicker.html">Clicker Games</a></li>
+                    <li><a href="car.html">Car Games</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Connect With Us</h3>
+                <ul>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">TikTok</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 SixCatSixCat. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the game ID from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const gameId = urlParams.get('id');
+            console.log('Game ID:', gameId);
+            
+            // 游戏数据
+            const games = {
+                "conquer-kingdoms": {
+                    title: "Conquer Kingdoms",
+                    description: "Build your kingdom, train your army, battle your enemies, and become the ruler! Conquer Kingdoms is a strategic adventure game where you start with a small settlement and expand it into a mighty empire. Manage resources, research technologies, forge alliances, and lead your armies to victory.",
+                    controls: "Mouse to select and move units. WASD to move camera. Q and E to rotate. Number keys 1-9 to access different menus. R to reset camera position.",
+                    category: "Adventure",
+                    iframeUrl: "https://playcanv.as/p/RqJJ9oU9/"
+                },
+                "miniblox-io": {
+                    title: "Miniblox IO",
+                    description: "Explore, build, battle, and play with friends in this pixel world!",
+                    controls: "WASD to move, mouse to look around, left click to break blocks, right click to place blocks, E to open inventory, Space to jump.",
+                    category: "Adventure",
+                    iframeUrl: "https://trinket.io/embed/minecraft/17b50c0621"
+                },
+                "stickman-gta": {
+                    title: "Stickman GTA City",
+                    description: "Control your stickman to complete various missions and experience the fun of an open world!",
+                    controls: "WASD to move, mouse to aim, left click to shoot, F to enter/exit vehicles, Space to jump, Shift to run.",
+                    category: "Adventure",
+                    iframeUrl: "https://www.twoplayergames.org/embed/stickman-street-fighting-3d"
+                },
+                "stickman-parkour": {
+                    title: "Stickman Parkour",
+                    description: "Run, jump, slide and overcome obstacles in this challenging parkour game!",
+                    controls: "W/Up Arrow to jump, S/Down Arrow to slide, A/D or Left/Right Arrows to move.",
+                    category: "Adventure",
+                    iframeUrl: "https://wanted5games.com/games/html5/stickman-boost-new-en-s-iga-cloud/index.html?pub=10"
+                },
+                "tribals-io": {
+                    title: "Tribals IO",
+                    description: "Survive on a remote island, gather resources, build tools and fight other tribes!",
+                    controls: "WASD to move, E to interact/gather, Q to open crafting menu, 1-9 to select items, left click to use item.",
+                    category: "Adventure",
+                    iframeUrl: "https://itch.io/embed-upload/5330127?color=333333"
+                },
+                "minecraft-classic": {
+                    title: "Minecraft Classic",
+                    description: "Build anything you can imagine in this creative block-building game!",
+                    controls: "WASD to move, Space to jump, left click to break blocks, right click to place blocks, E to open inventory.",
+                    category: "Adventure",
+                    iframeUrl: "https://classic.minecraft.net/"
+                },
+                "dta-6": {
+                    title: "DTA 6",
+                    description: "Experience an open world sandbox with cars, weapons and missions!",
+                    controls: "WASD to move, mouse to aim/look, left click to shoot, F to enter/exit vehicles, Space to jump, Shift to run.",
+                    category: "Adventure",
+                    iframeUrl: "https://v6p9d9t4.ssl.hwcdn.net/html/3448638/WebGL/index.html"
+                },
+                "paper-minecraft": {
+                    title: "Paper Minecraft",
+                    description: "A 2D version of the popular sandbox game with all the classic features!",
+                    controls: "WASD to move, Space to jump, left click to break blocks, right click to place blocks, E to open inventory.",
+                    category: "Adventure",
+                    iframeUrl: "https://scratch.mit.edu/projects/10128407/embed"
+                },
+                "cat-simulator": {
+                    title: "Cat Simulator",
+                    description: "Live the life of a cat: explore, play, climb, and cause mischief!",
+                    controls: "WASD to move, Space to jump, left click to interact, right click to meow, Shift to run.",
+                    category: "Adventure",
+                    iframeUrl: "https://v6p9d9t4.ssl.hwcdn.net/html/2624809/index.html"
+                },
+                "bob-the-robber": {
+                    title: "Bob the Robber",
+                    description: "Sneak past security systems and steal valuable treasures in this stealth game!",
+                    controls: "WASD or Arrow keys to move, Space to interact, Shift to sneak, Ctrl to hide.",
+                    category: "Adventure",
+                    iframeUrl: "https://www.silvergames.com/en/bob-the-robber/iframe"
+                },
+                "turbo-race-3d": {
+                    title: "Turbo Race 3D",
+                    description: "Turbo Race 3D is a free online racing game that keeps things simple and fun. You don't have to worry about pressing the gas. Instead, you focus on steering and braking to handle traffic and tight corners. You'll be dodging buses in the city or drifting on icy roads. Despite all the action, the pace feels just right, you learn and improve without feeling overwhelmed. With each win, you earn coins, unlock new tracks, and move closer to becoming the Turbo Race 3D champ. The game takes you through three totally different worlds: city streets, dusty desert highways, and icy snow roads. Each world has its own set of unique challenges and up to nine action-filled races. Whether you're dodging buses or flying past cars with nitro, it's all about quick reflexes and smart moves on just five keys on your keyboard.",
+                    controls: "Arrow Keys: Steer left or right, and brake with the down arrow. Z: Activate invincibility when you need to avoid damage. X: Use nitro boost for a quick speed burst.",
+                    category: "Car",
+                    iframeUrl: "https://html5.gamedistribution.com/6b93a7631e0d41d59cd4d661b46ccf90/?gd_sdk_referrer_url=https://www.onlinegames.io/turbo-race-3d/"
+                },
+                "race-clicker-drift-max": {
+                    title: "Race Clicker: Drift Max",
+                    description: "Click! Click the gas in Race Clicker: DRIFT MAX! And watch your car rocket off the line! In this wild drift game, the formula is simple: tapping speed = car's speed. So go click to build up speed, drift through corners, and knock down rivals! This free online game is a curious mash-up of a racing simulator and a clicker mechanic, and it actually works surprisingly well. It's all about racking up speed with frantic clicks (or space bar taps) before each race, then diving headlong into high-octane drifts to knock rivals off the road. And please, please believe us, one second you're tapping your mouse, thinking this is just another mid clicker game. And the next thing you know, you're drifting around corners like some over-caffeinated stunt driver.",
+                    controls: "Click or tap to speed up. Press AD or the left and right arrow keys to steer.",
+                    category: "Car",
+                    iframeUrl: "https://html5.gamedistribution.com/a02de4821afa46c3b69dd95385c314db/?gd_sdk_referrer_url=https://www.onlinegames.io/race-clicker-drift-max/"
+                },
+                "drift-king": {
+                    title: "Drift King",
+                    description: "Drift King stands out among online drift games, offering a unique experience where you can witness the smoke you leave behind from the rearview window. This game surrounds you in every realistic detail, from its premium 3D visuals to the choice of 10 sports cars and 6 maps. The comprehensive tuning options further enhance the game, making it a complete package for drifting enthusiasts.",
+                    controls: "WASD or arrow keys: Move car. M: Rearview Mirror. C: Change Camera. R: Reset Car. U: Toggle between KMH and MPH. I: Start/Stop Engine. P: Fullscreen.",
+                    category: "Car",
+                    iframeUrl: "https://www.onlinegames.io/games/2024/unity/drift-king/index.html"
+                },
+                "highway-traffic": {
+                    title: "Highway Traffic",
+                    description: "Ready for some quick slopey fun? Play Slope Rolling, an online game where you guide your rolling ball down a never-ending track filled with twists, sharp turns, and sudden drops. Watch out! The further you roll, the faster you go, and obstacles appear more often. How far can you roll before your skills are put to the ultimate test?",
+                    controls: "J - Activate Invincibility (temporarily immune to obstacles). K - Activate Magnet (automatically collect nearby diamonds). L - Activate Double Income (earn double diamonds for a limited time).",
+                    category: "Car",
+                    iframeUrl: "https://html5.gamedistribution.com/0022998ce3c54962be6ffe178229b168/?gd_sdk_referrer_url=https://www.onlinegames.io/slope-rolling/"
+                },
+                "traffic-jam-3d": {
+                    title: "Traffic Jam 3D",
+                    description: "Are you ready to overtake vehicles at full speed on the highway? Traffic Jam 3D is a 3D driving game where you can steer your vehicle on the endless road across various modes. As you can guess, there will be heavy traffic on the road! You must drive your car well without crashing any car. Keep your eyes wide open and act like a circus monkey on this endless highway in this simulator game! Try not to scare other drivers too much.😈",
+                    controls: "Desktop: Arrow Keys: Steer the Car, N Key: Use Nitro, ESC: Pause. Mobile: Use the virtual buttons on the screen to steer the car.",
+                    category: "Car",
+                    iframeUrl: "https://html5.gamedistribution.com/337302b23b5943d8bcfc501d81d50cdb/?gd_sdk_referrer_url=https://www.onlinegames.io/traffic-jam-3d/"
+                },
+                "gta-simulator": {
+                    title: "GTA Simulator",
+                    description: "You know that famous GTA video game series, right? Well, meet its online and free version on OnlineGames.io. GTA Simulator is a simulator game that you can play on your web browser without the need to download. Just like in the original GTA game, you are given some tasks in GTA Simulator. As you fulfill these, you will earn rewards and diamonds. Defeat the gangsters and save the island!",
+                    controls: "WASD or the Arrow Keys: Move. Left Shift (or tap on the running image): Run Fast. E Key: Punch or Shoot. F Key: Enter a Car. Tap on the Aiming Icon: Punch and Kick. Tap on the Flying Kick Image: Give a Flying Kick. Tap on the Fist Icon: Change Your Weapons. Tap on the Grocery Cart Image: To Shopping. ESC Key: Menu.",
+                    category: "Car",
+                    iframeUrl: "https://www.onlinegames.io/games/2023/unity2/gta-simulator/index.html"
+                },
+                "drift-hunters-pro": {
+                    title: "Drift Hunters Pro",
+                    description: "Can you hear the engine moaning? Drift Hunters Pro is a thrilling 3D game with high-quality graphics for those who are fond of drifting & racing. You can play solely, or you can play on the servers with other players. In this game, you have 6 different tracks and 10 upgradable vehicles in the garage that you can buy with earnings via drifting. Enjoy the tire track!",
+                    controls: "Use WASD or the Arrow keys to direct the vehicle. Use the Space key as the handbrake. Use C to change the camera view. Use R for resetting the vehicle. Use U to change KMH > MPH. Use I for starting or stopping the engine. Use P for Full Screen.",
+                    category: "Car",
+                    iframeUrl: "https://www.onlinegames.io/games/2023/unity/drift-hunters-pro/index.html"
+                },
+                "madalin-stunt-cars-pro": {
+                    title: "Madalin Stunt Cars Pro",
+                    description: "Are you open to experiencing luxury? The 3D driving game Madalin Stunt Cars Pro features excellent graphics for lifelike experiences. You can choose from various vehicles in Madalin Stunt Cars Pro, from the most opulent sports cars to a police cruiser, in three distinct map areas.",
+                    controls: "Use the Arrow keys or WASD to steer the vehicle. Use the Space key to handbrake. Use the Shift key to use nitro. Use the Ctrl key to change your car. Use the M key to see the rearview mirror. Use the H key to turn the police lights on (You can only use this feature when you select the police car.) Use the C key to change the camera view. Use the R key to reset the car. Use the U key to change KMH to MPH. Use the I key to start/stop the engine.",
+                    category: "Car",
+                    iframeUrl: "https://www.onlinegames.io/games/2023/unity/madalin-stunt-cars-pro/index.html"
+                },
+                "police-chase-drifter": {
+                    title: "Police Chase Drifter",
+                    description: "Collect money and ride with speed while escaping the police cars. Police Chase Drifter will give you the chance to become a drifter champion driving through the obstacles of the city. You will only get rid of the police cars by making them destroy themselves in the tight corners. Follow the arrows that will show you the way to the money. You will need money to buy and upgrade your ride. With speed and drift you will show the driving techniques and strategies. Find ways to get out of trouble without crushing the car and finally you will be able to become victorious.",
+                    controls: "WASD or arrow keys to control car.",
+                    category: "Car",
+                    iframeUrl: "https://www.onlinegames.io/games/2021/3/police-chase-drifter/index.html"
+                },
+                "car-stunt-king": {
+                    title: "Car Stunt King",
+                    description: "Ready for a stunt ride in a Dodge? Car Stunt King is a 3D driving game that offers an exhilarating driving experience on an obstacle course. It features various game modes, including racing and police chase. What you can do with these cars will blow your mind!",
+                    controls: "WASD or arrow keys to control car. Space for handbrake. Shift for nitro. R to reset car. C to change camera view.",
+                    category: "Car",
+                    iframeUrl: "https://www.onlinegames.io/games/2023/unity/car-stunt-king/index.html"
+                },
+                "stickman-gta-city": {
+                    title: "Stickman GTA City",
+                    description: "Stickman GTA City is a 3D action adventure game that you can play on your browser, absolutely free. You'll be stealing cars, dodging cops, and probably accidentally running over some stick pedestrians who didn't look both ways. And tanks? Helicopters? It's like Santa's gone rogue in the crime world!",
+                    controls: "WASD to move, mouse to aim, left click to shoot, F to enter/exit vehicles, Space to jump, Shift to run.",
+                    category: "Car",
+                    iframeUrl: "https://www.onlinegames.io/games/2023/unity/stickman-gta-city/index.html"
+                },
+                // Sports Games
+                'basket-random': {
+                    title: 'Basket Random',
+                    description: 'Basket Random is a pixelated arcade game where you participate in basketball games online against the CPU or a friend. The basketball players have limited mobility. Direct your character with only one key and perform the most dunks to the hoops to win. Basket Random will give you great pleasure with changing characters and environments as one of the most favorable sports games!',
+                    controls: [
+                        'There will be two teams in a match, and each team will have two members.',
+                        'Controlling the player will be the utmost challenge, as you can only use one key to control the stickman.',
+                        'You can not easily guess which way the character will move. But once you learn to control your man, no one can beat you anymore!',
+                        'When you get the ball, try to dunk it directly to the opposite side\'s hoop without losing it.',
+                        'The one who gets the five scores wins the game.'
+                    ],
+                    iframe: 'https://html5.gamedistribution.com/bf1268dccb5d43e7970bb3edaa54afc8/?gd_sdk_referrer_url=https://www.onlinegames.io/basket-random'
+                },
+                'soccer-random-pro': {
+                    title: 'Soccer Random Pro',
+                    description: 'Let\'s kick off some fun. I want you to picture this: you\'re playing Soccer Random Pro on OnlineGames.io with your best buddy glued to your laptop, bursting into laughter every few seconds. This game is wild. You control your player with the \'W\' key, making exaggerated jumping motions as if you could help his on-screen player jump higher. And your BFF, hitting the Up Arrow, shouts every time her player flips instead of kicking the ball.',
+                    controls: [
+                        'Computer:',
+                        '- Player 1: Press \'W\' to make your player jump and kick.',
+                        '- Player 2: Use the Up Arrow to jump and kick.',
+                        'Mobile:',
+                        '- Player 1: Swipe on the left side of the screen.',
+                        '- Player 2: Swipe on the ride side of the screen.'
+                    ],
+                    iframe: 'https://cloud.onlinegames.io/games/2024/construct/303/soccer-random-pro/index-og.html'
+                },
+                'basket-hoop': {
+                    title: 'Basket Hoop',
+                    description: 'In Basket Hoop, gravity is your only challenge, and tapping is your sole weapon. Your goal is simple make the ball jump and send it inside the hoop. The charm of the one button games peaks in Basket Hoop online. Make as many baskets as you can in a limited amount of time. This game brings the same joy of playing Skeeball in arcade rooms, but with an extra: longer play sessions than you\'d get with a single token.',
+                    controls: [
+                        'Computer:',
+                        'Use your mouse to shoot the ball.',
+                        'Mobile:',
+                        'Tap to shoot the ball'
+                    ],
+                    iframe: 'https://cloud.onlinegames.io/games/2024/construct/311/basket-hoop/index-og.html'
+                },
+                'pill-soccer': {
+                    title: 'Pill Soccer',
+                    description: 'Ole, ole, ole! Here is a soccer game with a wacky sports showdown: Pill Soccer. This unique 2-player game features cute 3D characters shaped like pills (yes, you read it right), bringing a fun twist to the traditional 1v1 soccer games. As you can guess, the aim is to score more goals than your opponent win matches and tournaments to earn diamonds!',
+                    controls: [
+                        '1 Player Controls',
+                        '- W / Up Arrow Key: Jump',
+                        '- A / Left Arrow Key: Move left',
+                        '- D / Right Arrow Key: Move right',
+                        '- S / Down Arrow Key: Kick',
+                        '- K / Z: Special move',
+                        '2 Player Controls',
+                        'Player 1:',
+                        '- W: Jump',
+                        '- A: Move left',
+                        '- D: Move right',
+                        '- S: Kick',
+                        '- Z: Special move'
+                    ],
+                    iframe: 'https://cloud.onlinegames.io/games/2024/gm/games3/pill-soccer/index.html'
+                },
+                'car-football': {
+                    title: 'Car Football',
+                    description: 'Are you ready to breathe new life into football? Car Football is a 2 player car game where you can kick a goal to the opponent\'s side with your favorite monster truck. There are 6 cars listed for you, two available in the first place. To open the rest, you need to earn coins via the games you have played.',
+                    controls: [
+                        'It is very simple to play Car Football.',
+                        '- Use the W key or the Upper arrow key to jump.',
+                        '- Use the A key or the Left arrow key to move backward.',
+                        '- Use the D key or the Right arrow key to move forward.'
+                    ],
+                    iframe: 'https://www.onlinegames.io/games/2023/construct/198/car-football/index.html'
+                },
+                '8-ball-pool': {
+                    title: '8 Ball Pool Billiard',
+                    description: 'Are you ready for your digital pool gaming experience? 8 Ball Pool Billiard is an online pool game where you can play with other players or against AI opponents. The idea of playing billiards against artificial intelligence sounds intriguing. It can also be delightful to play billiards with online players. You can view online players on the right side of the screen. You can choose the game you want to play billiards on by pressing the "refresh" button. Decide who you will play with and dive into a pool marathon!',
+                    controls: [
+                        '- Use your mouse and left mouse buttons to move your cue and hit the ball.'
+                    ],
+                    iframe: 'https://www.onlinegames.io/games/2022/unity3/8-ball-pool-billiard/index.html'
+                },
+                'horse-rider': {
+                    title: 'Horse Rider',
+                    description: 'Horse Rider is the game where you take your horse to competitions. You can experience the chance to be an equestrian in horse sports. Begin the journey as you jump over hurdles and race against the rivals to win the courses. Try to complete the laps while you are increasing the speed of the horse to reach the first place.',
+                    controls: [
+                        '• W or up arrow to speed up',
+                        '• Space to jump'
+                    ],
+                    iframe: 'https://html5.gamemonetize.co/a6d9kqfsjxbpdktw6p8j11z8bm776t8h/'
+                },
+                'basketball-king': {
+                    title: 'Basketball King',
+                    description: 'Step onto the court. Prepare for the ultimate basketball showdown with Basketball King! This slam dunk game isn\'t just about dribbling and shooting—it\'s about outsmarting your opponent, showing off your slick moves, and pulling off epic dunks.',
+                    controls: [
+                        '1st Player:',
+                        '- WAD: Move',
+                        '- S: Pump fake',
+                        '- B: Shoot/Steal',
+                        '- V: Activate special ability',
+                        '- Double D: Dash',
+                        '2nd Player:',
+                        '- Arrow Keys: Move',
+                        '- Down Arrow: Pump fake',
+                        '- L: Shoot/Steal',
+                        '- K: Activate special ability',
+                        '- Double left/right arrow: Dash'
+                    ],
+                    iframe: 'https://cloud.onlinegames.io/games/2024/construct/316/basketball-king/index-og.html'
+                },
+                'basket-champs': {
+                    title: 'Basket Champs',
+                    description: 'Basket Champs, an online basketball game, is designed to test players\' precision skills. In each match, you have 5 free throws to outscore your rival team. Step into the tournament, prove your skills, qualify out of the group, and earn your spot in the championship match!',
+                    controls: [
+                        '- Move your mouse to adjust the angle and speed',
+                        '- Left-click to throw the ball'
+                    ],
+                    iframe: 'https://www.onlinegames.io/games/2024/more/basket-champs/index.html'
+                },
+                'american-touchdown': {
+                    title: 'American Touchdown',
+                    description: 'American Touchdown is a 2 player ball game where you try to carry the ball to the opponent\'s side. If the ball is in your opponent\'s hand, you need to carefully approach him and take it from his hand. Of course, your hands must be in a suitable position to receive the ball. This match will be fascinating!',
+                    controls: [
+                        '1 Player',
+                        '- Use the A, D and W keys to move the character.',
+                        '2 Player',
+                        '- Use the left, right and upper arrow keys to move the second character.'
+                    ],
+                    iframe: 'https://www.onlinegames.io/games/2021/unity3/american-touchdown/index.html'
+                },
+                // Clicker Games
+                "capybara-clicker-pro": {
+                    title: "Capybara Clicker Pro",
+                    description: "Capybara Clicker Pro is an idle clicker game in which you tap on the adorable Capybara to collect Capybara coins. Increase the number of coins you make by clicking on the cute animal every second and every click to achieve more significant figures! The goal of this game is to tap and earn coins. As you progress, you'll also be able to unlock new great characters!",
+                    controls: "Tap on the Capybara to earn coins.",
+                    category: "Clicker",
+                    iframeUrl: "https://www.onlinegames.io/games/2023/q2/capybara-clicker-pro/index.html"
+                },
+                "poop-clicker": {
+                    title: "Poop Clicker",
+                    description: "Yes, we know it's a bit of a messy situation, but we need your plumbing skills! Play Poop Clicker, a free idle game with an odd twist; you get to be a dedicated plumber. Click on the poo-poo on the screen to earn fantastic rewards!",
+                    controls: "Click or tap on the poop to earn coins.",
+                    category: "Clicker",
+                    iframeUrl: "https://www.onlinegames.io/games/2024/construct/292/poop-clicker/index.html"
+                },
+                "idle-breakout": {
+                    title: "Idle Breakout",
+                    description: "Idle Breakout is a free online clicker game with arcade mechanics. The aim is to break all the bricks in a room. With hundreds of levels, this brick-breaker game provides endless gameplay. Click on the bricks or employ balls. Upgrade balls' power and speed, use lasers, and get all the ribbons! When you pass all the levels, proceed to the next prestige to be an ultimate brickbreaker!",
+                    controls: "- Start destroying blocks by clicking on them.\n- When you have enough coins, buy a basic ball from the top left.\n- Upgrade balls, use power-ups and pass as many levels as you can.\n- The number on the brick indicates how many times it needs to be hit to break.",
+                    category: "Clicker",
+                    iframeUrl: "https://www.onlinegames.io/games/2024/more/idle-breakout/index.html"
+                },
+                "idle-pet-business": {
+                    title: "Idle Pet Business",
+                    description: "Are you ready to become a millionaire by managing your very own pet shop? It's the dream job you've been waiting for! Idle Pet Business is an idle game where you start nurturing pets with a cute hamster and develop your pet empire.",
+                    controls: "Play Idle Pet Business using your mouse.",
+                    category: "Clicker",
+                    iframeUrl: "https://html5.gamedistribution.com/44a7af01c5c54014b12732a82a4d9443/?gd_sdk_referrer_url=https://www.onlinegames.io/idle-pet-business"
+                },
+                "evil-santa": {
+                    title: "Evil Santa",
+                    description: "Evil Santa is one of the most stress-relieving Christmas games out there in which the player tries to smash the virtual Santa. This man was once a good man who was giving children gifts. But, he has turned from a gift-giver into a mischief-maker. Now that Christmas is approaching, he will appear again and do ugly things. Beat him and stop him from misbehaving!",
+                    controls: "Use your mouse click to beat evil St. Claus and save the true spirit of Christmas.",
+                    category: "Clicker",
+                    iframeUrl: "https://www.onlinegames.io/games/2021/1/evil-santa/index.html"
+                },
+                "watermelon-suika": {
+                    title: "Watermelon Suika",
+                    description: "Summer surrounds us with upcoming vacations, ice cream trucks on every corner and DELICOUS FRUITS! Everybody knows that fruits taste very different and come in various colors and shapes in the summertime, from berries to cherries, bananas to ananas, coconuts to WATERMELONS!",
+                    controls: "Drag your finger to move and release to drop",
+                    category: "Clicker",
+                    iframeUrl: "https://html5.gamedistribution.com/893500b2a6ac4d08889dd6a93cc08700/?gd_sdk_referrer_url=https://www.onlinegames.io/watermelon-suika-game/"
+                },
+                "kick-the-zombie": {
+                    title: "Kick the Zombie",
+                    description: "Do you remember computers before the Internet? The times we used to play desktop destruction games... You would pick the hammer and crash the screen until it breaks into a thousand pieces virtually. If you're a 90's kid who used to enjoy desktop destroyers, here is the new generation of stress relief: Kick the Zombie!",
+                    controls: "- Start with the first zombie. The only weapon you have is your punch at the beginning.\n- Click on him to punch and kick.\n- Your aim is to destroy the zombie by kicking. Keep an eye on the health bar of the zombie to track your progress.\n- Each kick will bring you one coin. Plus, you'll get an extra 100 coins after completing a level.\n- Save your coins to buy more weapons.",
+                    category: "Clicker",
+                    iframeUrl: "https://www.onlinegames.io/games/2021/2/kick-the-zombie/index.html"
+                },
+                "pumpkin-monster": {
+                    title: "Pumpkin Monster",
+                    description: "With Halloween coming, let's have fun and relieve stress, shall we? At the end of the day, sometimes, we want to ease the accumulated stress. Pumpkin Monster is a 2D crazy game where a player shoots, stabs and burns a virtual pumpkin monster and beats it to level up and get coins. It is created for having fun with a Halloween theme and releasing those daily stresses freely.",
+                    controls: "Use your mouse's left-click to punch or shoot the pumpkin monster.",
+                    category: "Clicker",
+                    iframeUrl: "https://html5.gamedistribution.com/123c219b8bf0425dbdf14d9663c5029e/?gd_sdk_referrer_url=https://www.onlinegames.io/pumpkin-monster"
+                },
+                "idle-vlogger": {
+                    title: "Idle Vlogger",
+                    description: "Oh, who wouldn't want to be a famous vlogger with millions of subscribers on YouTube? For the ones who are too shy to upload their first-ever video on YouTube, here is a game where you can progress much faster and enjoy being a YouTuber!",
+                    controls: "Click or tap to play",
+                    category: "Clicker",
+                    iframeUrl: "https://playhop.com/app/242308?utm_source=distrib&skip-guard=1&header=no&utm_medium=cristian-ovidiu"
+                },
+                "nova-craft": {
+                    title: "Nova Craft",
+                    description: "We're taking you back a billion years to the dawn of creation. Armed with only four basic elements—fire, water, earth, and air. You'll start the Big Bang from scratch. In this alchemy game, combine elements to create new ones and see history unfold. The fate of the universe is in your hands. What will you discover first: War or Peace?",
+                    controls: "Nova Craft features one-handed gameplay with mouse-only controls:\n- Click and drag: Move elements around the board.\n- Combine elements: Drop one item on top of another to create something new.\n- Right-click: Remove unwanted items from the board.",
+                    category: "Clicker",
+                    iframeUrl: "https://cloud.onlinegames.io/games/2024/more2/nova-craft/index.html"
+                }
+            };
+
+            if (gameId && games[gameId]) {
+                console.log('Game found:', games[gameId]);
+                const gameData = games[gameId];
+                
+                const gameDetailsHTML = `
+                    <div class="game-container">
+                        <div class="game-info">
+                            <h1 class="game-title">${gameData.title}</h1>
+                            <div class="game-meta">
+                                <span class="game-category">${gameData.category}</span>
+                            </div>
+                            <p class="game-description">${gameData.description}</p>
+                            <div class="game-controls">
+                                <h3>Controls</h3>
+                                <p>${gameData.controls}</p>
+                            </div>
+                            <div class="share-buttons">
+                                <button class="share-button" onclick="shareOnTwitter()">
+                                    <i class="fa-brands fa-twitter"></i> Share on Twitter
+                                </button>
+                                <button class="share-button" onclick="shareOnFacebook()">
+                                    <i class="fa-brands fa-facebook"></i> Share on Facebook
+                                </button>
+                                <button class="share-button" onclick="shareOnTikTok()">
+                                    <i class="fa-brands fa-tiktok"></i> Share on TikTok
+                                </button>
+                            </div>
+                        </div>
+                        <div class="game-frame-container">
+                            <iframe src="${gameData.iframeUrl}" class="game-frame" allowfullscreen sandbox="allow-forms allow-scripts allow-pointer-lock allow-same-origin allow-popups"></iframe>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('game-details').innerHTML = gameDetailsHTML;
+            } else {
+                console.log('Game not found. Available games:', Object.keys(games));
+                document.getElementById('game-details').innerHTML = '<p>Game not found</p>';
+            }
+            
+            // 分享功能
+            window.shareOnTwitter = function() {
+                const text = `Playing ${games[gameId].title} on SixCatSixCat Games!`;
+                const url = window.location.href;
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+            };
+            
+            window.shareOnFacebook = function() {
+                const url = window.location.href;
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+            };
+            
+            window.shareOnTikTok = function() {
+                const url = window.location.href;
+                window.open(`https://www.tiktok.com/share?url=${encodeURIComponent(url)}`, '_blank');
+            };
+        });
+    </script>
+</body>
+</html> 

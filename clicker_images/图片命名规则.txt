@@ -1,0 +1,14 @@
+点击类游戏图片命名规则：
+
+1. capybara-clicker-pro.jpg
+2. poop-clicker.jpg
+3. idle-breakout.jpg
+4. idle-pet-business.jpg
+5. evil-santa.jpg
+6. watermelon-suika.jpg
+7. kick-the-zombie.jpg
+8. pumpkin-monster.jpg
+9. idle-vlogger.jpg
+10. nova-craft.jpg
+
+建议图片尺寸：600x600像素，JPG格式
